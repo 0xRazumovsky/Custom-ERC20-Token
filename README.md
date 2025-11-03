@@ -80,42 +80,12 @@ MyToken
 forge test
 ```
 
-### Run tests with coverage
-```bash
-forge test --coverage
-```
-
-### Run specific test
-```bash
-forge test --match-test test_mint
-```
-
-### Run tests with verbose output
-```bash
-forge test -vvv
-```
-
 ## Deployment
-
-### Local Development
-```bash
-# Start local blockchain
-anvil
-
-# Deploy to local network
-forge script script/Token.s.sol --rpc-url http://localhost:8545 --private-key $PRIVATE_KEY --broadcast
-```
 
 ### Testnet Deployment
 ```bash
 # Deploy to Sepolia
 forge script script/Token.s.sol --rpc-url $SEPOLIA_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify
-```
-
-### Mainnet Deployment
-```bash
-# Deploy to Ethereum mainnet
-forge script script/Token.s.sol --rpc-url $MAINNET_RPC_URL --private-key $PRIVATE_KEY --broadcast --verify
 ```
 
 ## Usage
@@ -171,65 +141,6 @@ token.removeFromBlacklist(address);
 bool isBlacklisted = token.isBlacklisted(address);
 ```
 
-#### Pause/Unpause
-```solidity
-// Pause all transfers (requires PAUSER_ROLE)
-token.pause();
-
-// Unpause all transfers (requires PAUSER_ROLE)
-token.unpause();
-```
-
-#### Fee Management
-```solidity
-// Update transfer fee (requires FEE_MANAGER_ROLE)
-token.setTransferFeePercentage(500); // 5%
-
-// Update fee collector (requires FEE_MANAGER_ROLE)
-token.setFeeCollector(newCollector);
-
-// Calculate fees
-(uint256 fee, uint256 net) = token.calculateTransferFee(1000 * 10**18);
-```
-
-#### Role Management
-```solidity
-// Grant roles (requires ADMIN_ROLE)
-token.grantMinterRole(address);
-token.grantBurnerRole(address);
-token.grantBlacklistManagerRole(address);
-token.grantPauserRole(address);
-token.grantFeeManagerRole(address);
-
-// Revoke roles (requires ADMIN_ROLE)
-token.revokeMinterRole(address);
-token.revokeBurnerRole(address);
-// ... etc
-```
-
-## Configuration
-
-### Environment Variables
-Create a `.env` file:
-```env
-PRIVATE_KEY=your_private_key_here
-SEPOLIA_RPC_URL=https://sepolia.infura.io/v3/your_project_id
-MAINNET_RPC_URL=https://mainnet.infura.io/v3/your_project_id
-ETHERSCAN_API_KEY=your_etherscan_api_key
-```
-
-### Foundry Configuration
-The project uses the default Foundry configuration. Key settings in `foundry.toml`:
-```toml
-[profile.default]
-src = "src"
-out = "out"
-libs = ["lib"]
-solc = "0.8.28"
-optimizer = true
-optimizer_runs = 200
-```
-
 ## Test Coverage
 
 The project maintains 100% test coverage across all functions:
@@ -269,7 +180,11 @@ The project maintains 100% test coverage across all functions:
 - Only PAUSER_ROLE can pause/unpause
 - Prevents all transfers when paused
 
-
+### Development Guidelines
+- Maintain 100% test coverage
+- Follow Solidity best practices
+- Add comprehensive documentation
+- Include gas optimization considerations
 
 ## Contributing
 
@@ -278,25 +193,3 @@ The project maintains 100% test coverage across all functions:
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
-
-### Development Guidelines
-- Maintain 100% test coverage
-- Follow Solidity best practices
-- Add comprehensive documentation
-- Include gas optimization considerations
-
-## Support
-
-- **Issues**: [GitHub Issues](https://github.com/yourusername/MyToken/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/MyToken/discussions)
-- **Documentation**: [Wiki](https://github.com/yourusername/MyToken/wiki)
-
-## Acknowledgments
-
-- [OpenZeppelin](https://openzeppelin.com/) - For secure contract libraries
-- [Foundry](https://getfoundry.sh/) - For the development framework
-- [Ethereum](https://ethereum.org/) - For the blockchain platform
-
----
-
-** Disclaimer**: This software is provided "as is" without warranty. Use at your own risk. Always audit smart contracts before deploying to mainnet.
